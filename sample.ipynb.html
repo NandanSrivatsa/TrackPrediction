@@ -1,0 +1,235 @@
+<html>
+<head>
+<title>sample.ipynb</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #7a7e85;}
+.s1 { color: #bcbec4;}
+.s2 { color: #cf8e6d;}
+.s3 { color: #bcbec4;}
+.s4 { color: #6aab73;}
+.s5 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+sample.ipynb</font>
+</center></td></tr></table>
+<pre><span class="s0">#%% md 
+</span><span class="s1"># This is a sample Jupyter Notebook 
+ 
+Below is an example of a code cell.  
+Put your cursor into the cell and press Shift+Enter to execute it and select the next one, or click !here goes the icon of the corresponding button in the gutter! button. 
+To debug a cell, press Alt+Shift+Enter, or click !here goes the icon of the corresponding button in the gutter! button. 
+ 
+Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings. 
+ 
+To learn more about Jupyter Notebooks in PyCharm, see [help](https://www.jetbrains.com/help/pycharm/jupyter-notebook-support.html). 
+For an overview of PyCharm, go to Help -&gt; Learn IDE features or refer to [our documentation](https://www.jetbrains.com/help/pycharm/getting-started.html). 
+</span><span class="s0">#%% 
+# Import all libraries</span>
+<span class="s2">import </span><span class="s1">pandas </span><span class="s2">as </span><span class="s1">pd</span>
+<span class="s2">import </span><span class="s1">numpy </span><span class="s2">as </span><span class="s1">np</span>
+<span class="s2">from </span><span class="s1">math </span><span class="s2">import </span><span class="s1">cos</span><span class="s3">, </span><span class="s1">sin</span><span class="s3">, </span><span class="s1">pi</span>
+<span class="s2">import </span><span class="s1">matplotlib </span><span class="s2">as </span><span class="s1">mpl</span>
+<span class="s2">import </span><span class="s1">matplotlib</span><span class="s3">.</span><span class="s1">pyplot </span><span class="s2">as </span><span class="s1">plt</span>
+<span class="s2">from </span><span class="s1">sklearn</span><span class="s3">.</span><span class="s1">linear_model </span><span class="s2">import </span><span class="s1">LinearRegression</span>
+<span class="s2">from </span><span class="s1">sklearn</span><span class="s3">.</span><span class="s1">preprocessing </span><span class="s2">import </span><span class="s1">PolynomialFeatures</span>
+<span class="s2">from </span><span class="s1">sklearn</span><span class="s3">.</span><span class="s1">pipeline </span><span class="s2">import </span><span class="s1">make_pipeline</span>
+<span class="s2">from </span><span class="s1">scipy</span><span class="s3">.</span><span class="s1">optimize </span><span class="s2">import </span><span class="s1">curve_fit</span>
+<span class="s2">from </span><span class="s1">numpy </span><span class="s2">import </span><span class="s1">arange</span>
+<span class="s2">import </span><span class="s1">numpy </span><span class="s2">as </span><span class="s1">np</span>
+<span class="s2">import </span><span class="s1">matplotlib</span><span class="s3">.</span><span class="s1">pyplot </span><span class="s2">as </span><span class="s1">plt</span>
+<span class="s2">from </span><span class="s1">scipy</span><span class="s3">.</span><span class="s1">optimize </span><span class="s2">import </span><span class="s1">curve_fit</span>
+<span class="s2">from </span><span class="s1">scipy</span><span class="s3">.</span><span class="s1">stats </span><span class="s2">import </span><span class="s1">pearsonr</span>
+<span class="s2">from </span><span class="s1">sklearn</span><span class="s3">.</span><span class="s1">model_selection </span><span class="s2">import </span><span class="s1">train_test_split</span>
+<span class="s0">#%% 
+# My statistics</span>
+<span class="s1">trackSheet </span><span class="s3">= </span><span class="s4">'1hWjW5nyCDkUnjwfDAt1iOXH2ljS_OmPclcfsvarAsMU'</span>
+<span class="s1">trackData </span><span class="s3">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">read_csv</span><span class="s3">(</span><span class="s4">f&quot;https://docs.google.com/spreadsheets/d/</span><span class="s2">{</span><span class="s1">trackSheet</span><span class="s2">}</span><span class="s4">/export?format=csv&quot;</span><span class="s3">)</span>
+
+<span class="s0"># For the statistics of late bloomers</span>
+<span class="s1">sterlingSheet </span><span class="s3">= </span><span class="s4">'10BvVUs6pFrptbfpiowA9izyuprRekzZxAfPRKXyfOfI'</span>
+<span class="s1">sterlingData </span><span class="s3">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">read_csv</span><span class="s3">(</span><span class="s4">f&quot;https://docs.google.com/spreadsheets/d/</span><span class="s2">{</span><span class="s1">sterlingSheet</span><span class="s2">}</span><span class="s4">/export?format=csv&quot;</span><span class="s3">)</span>
+
+<span class="s1">sterlingTjSheet </span><span class="s3">= </span><span class="s4">'1yUPM09sVTjtok4M6YCQ7whNTdIJc0TUUEmL0VDA0als'</span>
+<span class="s1">sterlingTJ </span><span class="s3">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">read_csv</span><span class="s3">(</span><span class="s4">f&quot;https://docs.google.com/spreadsheets/d/</span><span class="s2">{</span><span class="s1">sterlingTjSheet</span><span class="s2">}</span><span class="s4">/export?format=csv&quot;</span><span class="s3">)</span>
+<span class="s0">#%% 
+</span><span class="s1">trackData</span>
+<span class="s0">#%% 
+</span><span class="s1">sterlingData</span>
+<span class="s0">#%% 
+</span><span class="s1">sterlingTJ</span>
+<span class="s0">#%% 
+# Converting data into a usable format</span>
+
+<span class="s1">x1 </span><span class="s3">= </span><span class="s1">trackData</span><span class="s3">[</span><span class="s4">'LJ Date'</span><span class="s3">]</span>
+<span class="s1">y1 </span><span class="s3">= </span><span class="s1">trackData</span><span class="s3">[</span><span class="s4">'LJ Distance (m)'</span><span class="s3">]</span>
+
+<span class="s1">x2 </span><span class="s3">= </span><span class="s1">sterlingData</span><span class="s3">[</span><span class="s4">'ST LJ Date'</span><span class="s3">]</span>
+<span class="s1">y2 </span><span class="s3">= </span><span class="s1">sterlingData</span><span class="s3">[</span><span class="s4">'ST LJ Distance (m)'</span><span class="s3">]</span>
+
+<span class="s1">x3 </span><span class="s3">= </span><span class="s1">sterlingTJ</span><span class="s3">[</span><span class="s4">'Comp No'</span><span class="s3">]</span>
+<span class="s1">y3 </span><span class="s3">= </span><span class="s1">sterlingTJ</span><span class="s3">[</span><span class="s4">'STTJLN (m)'</span><span class="s3">]</span>
+<span class="s0">#%% 
+# Plotting Sterlings long jump</span>
+
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">plot</span><span class="s3">(</span><span class="s1">x2</span><span class="s3">, </span><span class="s1">y2</span><span class="s3">, </span><span class="s4">'x'</span><span class="s3">)</span>
+
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">xlabel</span><span class="s3">(</span><span class="s4">'Comp instance'</span><span class="s3">)</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">ylabel</span><span class="s3">(</span><span class="s4">'Distance (m)'</span><span class="s3">)</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">title</span><span class="s3">(</span><span class="s4">&quot;Sterlings Long Jumps&quot;</span><span class="s3">)</span>
+
+
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">xlim</span><span class="s3">(</span><span class="s5">0</span><span class="s3">, </span><span class="s5">23</span><span class="s3">)</span>
+
+<span class="s0"># Fitting the curve for Sterlings long jumps</span>
+<span class="s2">def </span><span class="s1">map_func</span><span class="s3">(</span><span class="s1">x</span><span class="s3">, </span><span class="s1">a</span><span class="s3">, </span><span class="s1">b</span><span class="s3">, </span><span class="s1">c</span><span class="s3">):</span>
+  <span class="s1">comp </span><span class="s3">= </span><span class="s1">a </span><span class="s3">* </span><span class="s1">x </span><span class="s3">+ </span><span class="s1">b </span><span class="s3">* </span><span class="s1">x </span><span class="s3">** </span><span class="s5">2 </span><span class="s3">+ </span><span class="s1">c</span>
+  <span class="s2">return </span><span class="s1">comp</span>
+
+<span class="s1">opt_param</span><span class="s3">, </span><span class="s1">_ </span><span class="s3">= </span><span class="s1">curve_fit</span><span class="s3">(</span><span class="s1">map_func</span><span class="s3">, </span><span class="s1">x2</span><span class="s3">, </span><span class="s1">y2</span><span class="s3">)</span>
+<span class="s1">a</span><span class="s3">, </span><span class="s1">b</span><span class="s3">, </span><span class="s1">c </span><span class="s3">= </span><span class="s1">opt_param</span>
+
+<span class="s1">x_line </span><span class="s3">= </span><span class="s1">arange</span><span class="s3">(</span><span class="s5">0</span><span class="s3">, </span><span class="s5">15</span><span class="s3">)</span>
+<span class="s1">y_line </span><span class="s3">= </span><span class="s1">map_func</span><span class="s3">(</span><span class="s1">x_line</span><span class="s3">, </span><span class="s1">a</span><span class="s3">, </span><span class="s1">b</span><span class="s3">, </span><span class="s1">c</span><span class="s3">)</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">grid</span><span class="s3">(</span><span class="s2">True</span><span class="s3">)</span>
+
+<span class="s0"># Plotting the graph</span>
+
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">plot</span><span class="s3">(</span><span class="s1">x_line</span><span class="s3">, </span><span class="s1">y_line</span><span class="s3">, </span><span class="s1">color </span><span class="s3">= </span><span class="s4">'blue'</span><span class="s3">, </span><span class="s1">label </span><span class="s3">= </span><span class="s4">'Sterling trend'</span><span class="s3">)</span>
+
+<span class="s0"># The line graph is where I derive my predictions for myself from Sterling Scotts. </span>
+
+<span class="s1">coefA </span><span class="s3">= </span><span class="s1">b</span>
+<span class="s1">coefB </span><span class="s3">= </span><span class="s1">a</span>
+
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">legend</span><span class="s3">()</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">show</span><span class="s3">()</span>
+
+
+<span class="s0">#%% 
+# Plotting Sterlings triple jump</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">plot</span><span class="s3">(</span><span class="s1">x3</span><span class="s3">, </span><span class="s1">y3</span><span class="s3">, </span><span class="s4">'x'</span><span class="s3">)</span>
+
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">xlabel</span><span class="s3">(</span><span class="s4">'Comp No'</span><span class="s3">)</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">ylabel</span><span class="s3">(</span><span class="s4">'Distance (m)'</span><span class="s3">)</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">title</span><span class="s3">(</span><span class="s4">&quot;Sterlings Triple Jumps&quot;</span><span class="s3">)</span>
+
+<span class="s0"># Fit Sterlings triple jump curve</span>
+
+<span class="s2">def </span><span class="s1">map_func</span><span class="s3">(</span><span class="s1">x</span><span class="s3">, </span><span class="s1">a</span><span class="s3">, </span><span class="s1">b</span><span class="s3">, </span><span class="s1">c</span><span class="s3">):</span>
+  <span class="s1">comp </span><span class="s3">= </span><span class="s1">a </span><span class="s3">* </span><span class="s1">x </span><span class="s3">+ </span><span class="s1">b </span><span class="s3">* </span><span class="s1">x </span><span class="s3">** </span><span class="s5">2 </span><span class="s3">+ </span><span class="s1">c</span>
+  <span class="s2">return </span><span class="s1">comp</span>
+
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">xlim</span><span class="s3">(</span><span class="s5">0</span><span class="s3">, </span><span class="s5">30</span><span class="s3">)</span>
+
+<span class="s1">opt_param</span><span class="s3">, </span><span class="s1">_ </span><span class="s3">= </span><span class="s1">curve_fit</span><span class="s3">(</span><span class="s1">map_func</span><span class="s3">, </span><span class="s1">x3</span><span class="s3">, </span><span class="s1">y3</span><span class="s3">)</span>
+<span class="s1">a</span><span class="s3">, </span><span class="s1">b</span><span class="s3">, </span><span class="s1">c </span><span class="s3">= </span><span class="s1">opt_param</span>
+
+<span class="s1">x_line </span><span class="s3">= </span><span class="s1">arange</span><span class="s3">(</span><span class="s5">0</span><span class="s3">, </span><span class="s5">45</span><span class="s3">)</span>
+<span class="s1">y_line </span><span class="s3">= </span><span class="s1">map_func</span><span class="s3">(</span><span class="s1">x_line</span><span class="s3">, </span><span class="s1">a</span><span class="s3">, </span><span class="s1">b</span><span class="s3">, </span><span class="s1">c</span><span class="s3">)</span>
+
+<span class="s0"># Plot the lines</span>
+
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">plot</span><span class="s3">(</span><span class="s1">x_line</span><span class="s3">, </span><span class="s1">y_line</span><span class="s3">, </span><span class="s1">color </span><span class="s3">= </span><span class="s4">'blue'</span><span class="s3">, </span><span class="s1">label </span><span class="s3">= </span><span class="s4">'Sterling trend'</span><span class="s3">)</span>
+
+<span class="s0"># Derive coefficients for prediction equation</span>
+<span class="s0"># C = 12.73</span>
+
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">legend</span><span class="s3">()</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">show</span><span class="s3">()</span>
+
+<span class="s1">a</span>
+<span class="s0">#%% 
+</span><span class="s1">plt</span><span class="s3">.</span><span class="s1">plot</span><span class="s3">(</span><span class="s1">x1</span><span class="s3">, </span><span class="s1">y1</span><span class="s3">, </span><span class="s4">'x'</span><span class="s3">)</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">xlim</span><span class="s3">(</span><span class="s5">0</span><span class="s3">, </span><span class="s5">33</span><span class="s3">)</span>
+
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">xlabel</span><span class="s3">(</span><span class="s4">'Comp instance'</span><span class="s3">)</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">ylabel</span><span class="s3">(</span><span class="s4">'Distance (m)'</span><span class="s3">)</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">title</span><span class="s3">(</span><span class="s4">&quot;Nandans long jumps&quot;</span><span class="s3">)</span>
+
+<span class="s0">#a is equal to 0.0622409779031281</span>
+<span class="s0">#b is equal to -0.0010995078636484301 </span>
+<span class="s0">#c is equal to 5.38 : This is his starting long jump value</span>
+
+<span class="s2">def </span><span class="s1">quadratic</span><span class="s3">(</span><span class="s1">x</span><span class="s3">, </span><span class="s1">a</span><span class="s3">, </span><span class="s1">b</span><span class="s3">, </span><span class="s1">c</span><span class="s3">):</span>
+  <span class="s2">return </span><span class="s1">a </span><span class="s3">* </span><span class="s1">x </span><span class="s3">**</span><span class="s5">2 </span><span class="s3">+ </span><span class="s1">b</span><span class="s3">*</span><span class="s1">x </span><span class="s3">+ </span><span class="s1">c </span>
+
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">xlim</span><span class="s3">(</span><span class="s5">0</span><span class="s3">, </span><span class="s5">20</span><span class="s3">)</span>
+
+<span class="s1">a </span><span class="s3">= </span><span class="s1">coefB</span>
+<span class="s1">b </span><span class="s3">= </span><span class="s1">coefA </span><span class="s0"># Downwards curve</span>
+<span class="s1">c </span><span class="s3">= </span><span class="s5">5.46 </span><span class="s0"># Starting value, pretty much attempts to start where I jump</span>
+
+<span class="s1">x </span><span class="s3">= </span><span class="s1">np</span><span class="s3">.</span><span class="s1">linspace</span><span class="s3">(</span><span class="s5">0</span><span class="s3">, </span><span class="s5">15</span><span class="s3">, </span><span class="s5">400</span><span class="s3">)</span>
+<span class="s1">y </span><span class="s3">= </span><span class="s1">quadratic</span><span class="s3">(</span><span class="s1">x</span><span class="s3">, </span><span class="s1">b</span><span class="s3">, </span><span class="s1">a</span><span class="s3">, </span><span class="s1">c</span><span class="s3">)</span>
+
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">plot</span><span class="s3">(</span><span class="s1">x</span><span class="s3">, </span><span class="s1">y</span><span class="s3">, </span><span class="s4">'-'</span><span class="s3">, </span><span class="s1">label </span><span class="s3">= </span><span class="s4">'Nandan theoretical LJ trend'</span><span class="s3">)</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">plot</span><span class="s3">(</span><span class="s1">x</span><span class="s3">, </span><span class="s1">y</span><span class="s3">+</span><span class="s5">0.32</span><span class="s3">, </span><span class="s4">'-'</span><span class="s3">, </span><span class="s1">color </span><span class="s3">= </span><span class="s4">'red'</span><span class="s3">, </span><span class="s1">label </span><span class="s3">= </span><span class="s4">'Nandan theoretical max'</span><span class="s3">)</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">grid</span><span class="s3">(</span><span class="s2">True</span><span class="s3">)</span>
+
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">legend</span><span class="s3">()</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">show</span><span class="s3">()</span>
+
+
+<span class="s0">#%% 
+# Theoretical maximum triple jump should be around the 13.28 to 13.43 meter mark. </span>
+<span class="s0"># Theoretical maximum long jump should be around the 6.08 to 6.48 meter mark. </span>
+<span class="s0">#%% 
+</span><span class="s1">plt</span><span class="s3">.</span><span class="s1">plot</span><span class="s3">(</span><span class="s5">1</span><span class="s3">, </span><span class="s5">11.04</span><span class="s3">, </span><span class="s4">'x'</span><span class="s3">)</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">plot</span><span class="s3">(</span><span class="s5">11</span><span class="s3">, </span><span class="s5">11.54</span><span class="s3">, </span><span class="s4">'x'</span><span class="s3">)</span>
+
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">xlabel</span><span class="s3">(</span><span class="s4">'Comp instance'</span><span class="s3">)</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">ylabel</span><span class="s3">(</span><span class="s4">'Distance (m)'</span><span class="s3">)</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">title</span><span class="s3">(</span><span class="s4">&quot;Nandans triple jumps&quot;</span><span class="s3">)</span>
+
+<span class="s2">def </span><span class="s1">quadratic</span><span class="s3">(</span><span class="s1">x</span><span class="s3">, </span><span class="s1">a</span><span class="s3">, </span><span class="s1">b</span><span class="s3">, </span><span class="s1">c</span><span class="s3">):</span>
+  <span class="s2">return </span><span class="s1">a </span><span class="s3">* </span><span class="s1">x </span><span class="s3">**</span><span class="s5">2 </span><span class="s3">+ </span><span class="s1">b</span><span class="s3">*</span><span class="s1">x </span><span class="s3">+ </span><span class="s1">c </span>
+
+<span class="s1">a </span><span class="s3">= -</span><span class="s5">0.0034994542344459756</span>
+<span class="s1">b </span><span class="s3">= </span><span class="s5">0.2018625119462859</span>
+<span class="s1">c </span><span class="s3">= </span><span class="s5">10.64</span>
+
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">ylim</span><span class="s3">(</span><span class="s5">10.5</span><span class="s3">, </span><span class="s5">14</span><span class="s3">)</span>
+
+<span class="s2">import </span><span class="s1">numpy </span><span class="s2">as </span><span class="s1">np</span>
+<span class="s2">import </span><span class="s1">matplotlib</span><span class="s3">.</span><span class="s1">pyplot </span><span class="s2">as </span><span class="s1">plt</span>
+
+<span class="s0"># Define the coefficients of the quadratic function</span>
+<span class="s1">a </span><span class="s3">= -</span><span class="s5">0.0034994542344459756</span>
+<span class="s1">b </span><span class="s3">= </span><span class="s5">0.2018625119462859</span>
+<span class="s1">c </span><span class="s3">= </span><span class="s5">10.64</span>
+
+<span class="s0"># Define the quadratic function</span>
+<span class="s2">def </span><span class="s1">quadratic_function</span><span class="s3">(</span><span class="s1">x</span><span class="s3">):</span>
+    <span class="s2">return </span><span class="s1">a </span><span class="s3">* </span><span class="s1">x</span><span class="s3">**</span><span class="s5">2 </span><span class="s3">+ </span><span class="s1">b </span><span class="s3">* </span><span class="s1">x </span><span class="s3">+ </span><span class="s1">c</span>
+
+<span class="s0"># Generate x values</span>
+<span class="s1">x_values </span><span class="s3">= </span><span class="s1">np</span><span class="s3">.</span><span class="s1">linspace</span><span class="s3">(</span><span class="s5">0</span><span class="s3">, </span><span class="s5">50</span><span class="s3">, </span><span class="s5">400</span><span class="s3">)</span>
+
+<span class="s0"># Compute y values using the quadratic function</span>
+<span class="s1">y_values </span><span class="s3">= </span><span class="s1">quadratic_function</span><span class="s3">(</span><span class="s1">x_values</span><span class="s3">)</span>
+
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">xlim</span><span class="s3">(</span><span class="s5">0</span><span class="s3">, </span><span class="s5">30</span><span class="s3">)</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">ylim</span><span class="s3">(</span><span class="s5">10</span><span class="s3">, </span><span class="s5">14</span><span class="s3">)</span>
+
+<span class="s0"># Create the plot</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">plot</span><span class="s3">(</span><span class="s1">x_values</span><span class="s3">, </span><span class="s1">y_values</span><span class="s3">, </span><span class="s1">label</span><span class="s3">=</span><span class="s4">'Prediction line'</span><span class="s3">, </span><span class="s1">color</span><span class="s3">=</span><span class="s4">'blue'</span><span class="s3">)</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">plot</span><span class="s3">(</span><span class="s1">x_values</span><span class="s3">, </span><span class="s1">y_values</span><span class="s3">+</span><span class="s5">0.15</span><span class="s3">, </span><span class="s1">label</span><span class="s3">=</span><span class="s4">'TJ theoretical max line'</span><span class="s3">, </span><span class="s1">color</span><span class="s3">=</span><span class="s4">'green'</span><span class="s3">)</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">title</span><span class="s3">(</span><span class="s4">'Nandan TJ'</span><span class="s3">)</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">xlabel</span><span class="s3">(</span><span class="s4">'Distance (m)'</span><span class="s3">)</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">ylabel</span><span class="s3">(</span><span class="s4">'Comp instance'</span><span class="s3">)</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">grid</span><span class="s3">(</span><span class="s2">True</span><span class="s3">)</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">legend</span><span class="s3">()</span>
+<span class="s1">plt</span><span class="s3">.</span><span class="s1">show</span><span class="s3">()</span>
+
+<span class="s0">#%% 
+# Theoretically I should peak at a 13.55 meter triple jump, and with margin of error 13.70 meters.</span>
+<span class="s0">#%% 
+# LJ TheoMax - 6.08-6.48m</span>
+<span class="s0"># TJ TheoMax - 12.93-13.83m</span></pre>
+</body>
+</html>
